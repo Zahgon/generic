@@ -13,56 +13,45 @@ type Set[K any] struct {
 
 // New returns an empty hashset.
 func New[K any](capacity uint64, equals g.EqualsFn[K], hash g.HashFn[K]) *Set[K] {
-	return &Set[K]{
-		m: hashmap.New[K, struct{}](capacity, equals, hash),
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Of returns a new hashset initialized with the given 'vals'
 func Of[K any](capacity uint64, equals g.EqualsFn[K], hash g.HashFn[K], vals ...K) *Set[K] {
-	s := New[K](capacity, equals, hash)
-	for _, val := range vals {
-		s.Put(val)
-	}
-	return s
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Put adds 'val' to the set.
-func (s *Set[K]) Put(val K) {
-	s.m.Put(val, struct{}{})
-}
+func (s *Set[K]) Put(val K) { _ = "STUB: not implemented"; return }
 
 // Has returns true only if 'val' is in the set.
-func (s *Set[K]) Has(val K) bool {
-	_, ok := s.m.Get(val)
-	return ok
-}
+func (s *Set[K]) Has(val K) bool { _ = "STUB: not implemented"; return false }
 
 // Remove removes 'val' from the set.
 func (s *Set[K]) Remove(val K) {
-	s.m.Remove(val)
+	_ = "STUB: not implemented"
+
+	// Clear removes all elements from the set.
+	return
 }
 
-// Clear removes all elements from the set.
 func (s *Set[K]) Clear() {
-	s.m.Clear()
+	_ = "STUB: not implemented"
+
+	// Size returns the number of elements in the set.
+	return
 }
 
-// Size returns the number of elements in the set.
 func (s *Set[K]) Size() int {
-	return s.m.Size()
+	_ = "STUB: not implemented"
+
+	// Each calls 'fn' on every item in the set in no particular order.
+	return 0
 }
 
-// Each calls 'fn' on every item in the set in no particular order.
-func (s *Set[K]) Each(fn func(key K)) {
-	s.m.Each(func(key K, v struct{}) {
-		fn(key)
-	})
-}
+func (s *Set[K]) Each(fn func(key K)) { _ = "STUB: not implemented"; return }
 
 // Copy returns a copy of this set.
-func (s *Set[K]) Copy() *Set[K] {
-	return &Set[K]{
-		m: s.m.Copy(),
-	}
-}
+func (s *Set[K]) Copy() *Set[K] { _ = "STUB: not implemented"; return nil }

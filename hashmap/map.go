@@ -31,179 +31,42 @@ type ops[T any] struct {
 	hash   func(t T) uint64
 }
 
-func pow2ceil(num uint64) uint64 {
-	power := uint64(1)
-	for power < num {
-		power *= 2
-	}
-	return power
-}
+func pow2ceil(num uint64) uint64 { _ = "STUB: not implemented"; return 0 }
 
 // New constructs a new map with the given capacity.
 func New[K, V any](capacity uint64, equals g.EqualsFn[K], hash g.HashFn[K]) *Map[K, V] {
-	if capacity == 0 {
-		capacity = 1
-	}
-	capacity = pow2ceil(capacity)
-	return &Map[K, V]{
-		entries:  make([]entry[K, V], capacity),
-		capacity: capacity,
-		ops: ops[K]{
-			equals: equals,
-			hash:   hash,
-		},
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Get returns the value stored for this key, or false if there is no such
 // value.
-func (m *Map[K, V]) Get(key K) (V, bool) {
-	hash := m.ops.hash(key)
-	idx := hash & (m.capacity - 1)
+func (m *Map[K, V]) Get(key K) (V, bool) { _ = "STUB: not implemented"; return *new(V), false }
 
-	for m.entries[idx].filled {
-		if m.ops.equals(m.entries[idx].key, key) {
-			return m.entries[idx].value, true
-		}
-		idx++
-		if idx >= m.capacity {
-			idx = 0
-		}
-	}
-
-	var v V
-	return v, false
-}
-
-func (m *Map[K, V]) resize(newcap uint64) {
-	newm := Map[K, V]{
-		capacity: newcap,
-		length:   m.length,
-		entries:  make([]entry[K, V], newcap),
-		ops:      m.ops,
-	}
-
-	for _, ent := range m.entries {
-		if ent.filled {
-			newm.Put(ent.key, ent.value)
-		}
-	}
-	m.capacity = newm.capacity
-	m.entries = newm.entries
-}
+func (m *Map[K, V]) resize(newcap uint64) { _ = "STUB: not implemented"; return }
 
 // Put maps the given key to the given value. If the key already exists its
 // value will be overwritten with the new value.
-func (m *Map[K, V]) Put(key K, val V) {
-	if m.length >= m.capacity/2 {
-		m.resize(m.capacity * 2)
-	} else if m.readonly {
-		entries := make([]entry[K, V], len(m.entries), cap(m.entries))
-		copy(entries, m.entries)
-		m.entries = entries
-		m.readonly = false
-	}
+func (m *Map[K, V]) Put(key K, val V) { _ = "STUB: not implemented"; return }
 
-	hash := m.ops.hash(key)
-	idx := hash & (m.capacity - 1)
-
-	for m.entries[idx].filled {
-		if m.ops.equals(m.entries[idx].key, key) {
-			m.entries[idx].value = val
-			return
-		}
-		idx++
-		if idx >= m.capacity {
-			idx = 0
-		}
-	}
-
-	m.entries[idx].key = key
-	m.entries[idx].value = val
-	m.entries[idx].filled = true
-	m.length++
-}
-
-func (m *Map[K, V]) remove(idx uint64) {
-	var k K
-	var v V
-	m.entries[idx].filled = false
-	m.entries[idx].key = k
-	m.entries[idx].value = v
-	m.length--
-}
+func (m *Map[K, V]) remove(idx uint64) { _ = "STUB: not implemented"; return }
 
 // Remove removes the specified key-value pair from the map.
-func (m *Map[K, V]) Remove(key K) {
-	hash := m.ops.hash(key)
-	idx := hash & (m.capacity - 1)
+func (m *Map[K, V]) Remove(key K) { _ = "STUB: not implemented"; return }
 
-	for m.entries[idx].filled && !m.ops.equals(m.entries[idx].key, key) {
-		idx = (idx + 1) & (m.capacity - 1)
-	}
-
-	if !m.entries[idx].filled {
-		return
-	}
-
-	if m.readonly {
-		entries := make([]entry[K, V], len(m.entries), cap(m.entries))
-		copy(entries, m.entries)
-		m.entries = entries
-		m.readonly = false
-	}
-
-	m.remove(idx)
-
-	idx = (idx + 1) & (m.capacity - 1)
-	for m.entries[idx].filled {
-		krehash := m.entries[idx].key
-		vrehash := m.entries[idx].value
-		m.remove(idx)
-		m.Put(krehash, vrehash)
-		idx = (idx + 1) & (m.capacity - 1)
-	}
-
-	// halves the array if it is 12.5% full or less
-	if m.length > 0 && m.length <= m.capacity/8 {
-		m.resize(m.capacity / 2)
-	}
-}
+// halves the array if it is 12.5% full or less
 
 // Clear removes all key-value pairs from the map.
-func (m *Map[K, V]) Clear() {
-	for idx, entry := range m.entries {
-		if entry.filled {
-			m.remove(uint64(idx))
-		}
-	}
-}
+func (m *Map[K, V]) Clear() { _ = "STUB: not implemented"; return }
 
 // Size returns the number of items in the map.
-func (m *Map[K, V]) Size() int {
-	return int(m.length)
-}
+func (m *Map[K, V]) Size() int { _ = "STUB: not implemented"; return 0 }
 
 // Copy returns a copy of this map. The copy will not allocate any memory until
 // the first write, so any number of read-only copies can be made without any
 // additional allocations.
-func (m *Map[K, V]) Copy() *Map[K, V] {
-	m.readonly = true
-	return &Map[K, V]{
-		entries:  m.entries,
-		capacity: m.capacity,
-		length:   m.length,
-		readonly: true,
-		ops:      m.ops,
-	}
-}
+func (m *Map[K, V]) Copy() *Map[K, V] { _ = "STUB: not implemented"; return nil }
 
 // Each calls 'fn' on every key-value pair in the hashmap in no particular
 // order.
-func (m *Map[K, V]) Each(fn func(key K, val V)) {
-	for _, ent := range m.entries {
-		if ent.filled {
-			fn(ent.key, ent.value)
-		}
-	}
-}
+func (m *Map[K, V]) Each(fn func(key K, val V)) { _ = "STUB: not implemented"; return }

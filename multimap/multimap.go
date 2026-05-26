@@ -43,6 +43,4 @@ type baseMultiMap struct {
 	size int
 }
 
-func (m baseMultiMap) Size() int {
-	return m.size
-}
+func (m baseMultiMap) Size() int { _ = "STUB: not implemented"; return 0 }

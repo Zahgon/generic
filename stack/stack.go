@@ -8,47 +8,21 @@ type Stack[T any] struct {
 }
 
 // New returns an empty stack.
-func New[T any]() *Stack[T] {
-	return &Stack[T]{
-		entries: nil,
-	}
-}
+func New[T any]() *Stack[T] { _ = "STUB: not implemented"; return nil }
 
 // Push places 'value' at the top of the stack.
-func (s *Stack[T]) Push(value T) {
-	s.entries = append(s.entries, value)
-}
+func (s *Stack[T]) Push(value T) { _ = "STUB: not implemented"; return }
 
 // Pop removes the stack's top element and returns it. If the stack is empty it
 // returns the zero value.
-func (s *Stack[T]) Pop() (t T) {
-	if len(s.entries) == 0 {
-		return t
-	}
-	v := s.entries[len(s.entries)-1]
-	s.entries = s.entries[:len(s.entries)-1]
-	return v
-}
+func (s *Stack[T]) Pop() (t T) { _ = "STUB: not implemented"; return *new(T) }
 
 // Peek returns the stack's top element but does not remove it. If the stack is
 // empty the zero value is returned.
-func (s *Stack[T]) Peek() (t T) {
-	if len(s.entries) == 0 {
-		return t
-	}
-	return s.entries[len(s.entries)-1]
-}
+func (s *Stack[T]) Peek() (t T) { _ = "STUB: not implemented"; return *new(T) }
 
 // Size returns the number of elements in the stack.
-func (s *Stack[T]) Size() int {
-	return len(s.entries)
-}
+func (s *Stack[T]) Size() int { _ = "STUB: not implemented"; return 0 }
 
 // Copy returns a copy of this stack.
-func (s *Stack[T]) Copy() *Stack[T] {
-	entries := make([]T, len(s.entries))
-	copy(entries, s.entries)
-	return &Stack[T]{
-		entries: entries,
-	}
-}
+func (s *Stack[T]) Copy() *Stack[T] { _ = "STUB: not implemented"; return nil }

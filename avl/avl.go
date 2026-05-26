@@ -15,46 +15,29 @@ type Tree[K, V any] struct {
 }
 
 // New returns an empty AVL tree.
-func New[K, V any](less g.LessFn[K]) *Tree[K, V] {
-	return &Tree[K, V]{
-		less: less,
-	}
-}
+func New[K, V any](less g.LessFn[K]) *Tree[K, V] { _ = "STUB: not implemented"; return nil }
 
 // Put associates 'key' with 'value'.
-func (t *Tree[K, V]) Put(key K, value V) {
-	t.root = t.root.add(key, value, t.less)
-}
+func (t *Tree[K, V]) Put(key K, value V) { _ = "STUB: not implemented"; return }
 
 // Remove removes the value associated with 'key'.
-func (t *Tree[K, V]) Remove(key K) {
-	t.root = t.root.remove(key, t.less)
-}
+func (t *Tree[K, V]) Remove(key K) { _ = "STUB: not implemented"; return }
 
 // Get returns the value associated with 'key'.
-func (t *Tree[K, V]) Get(key K) (V, bool) {
-	n := t.root.search(key, t.less)
-	if n == nil {
-		var v V
-		return v, false
-	}
-	return n.value, true
-}
+func (t *Tree[K, V]) Get(key K) (V, bool) { _ = "STUB: not implemented"; return *new(V), false }
 
 // Each calls 'fn' on every node in the tree in order
 func (t *Tree[K, V]) Each(fn func(key K, val V)) {
-	t.root.each(fn)
+	_ = "STUB: not implemented"
+
+	// Height returns the height of the tree.
+	return
 }
 
-// Height returns the height of the tree.
-func (t *Tree[K, V]) Height() int {
-	return t.root.getHeight()
-}
+func (t *Tree[K, V]) Height() int { _ = "STUB: not implemented"; return 0 }
 
 // Size returns the number of elements in the tree.
-func (t *Tree[K, V]) Size() int {
-	return t.root.size()
-}
+func (t *Tree[K, V]) Size() int { _ = "STUB: not implemented"; return 0 }
 
 type node[K, V any] struct {
 	key   K
@@ -66,138 +49,32 @@ type node[K, V any] struct {
 }
 
 func (n *node[K, V]) add(key K, value V, less g.LessFn[K]) *node[K, V] {
-	if n == nil {
-		return &node[K, V]{
-			key:    key,
-			value:  value,
-			height: 1,
-			left:   nil,
-			right:  nil,
-		}
-	}
-
-	if g.Compare(key, n.key, less) < 0 {
-		n.left = n.left.add(key, value, less)
-	} else if g.Compare(key, n.key, less) > 0 {
-		n.right = n.right.add(key, value, less)
-	} else {
-		n.value = value
-	}
-	return n.rebalanceTree()
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (n *node[K, V]) remove(key K, less g.LessFn[K]) *node[K, V] {
-	if n == nil {
-		return nil
-	}
-	if g.Compare(key, n.key, less) < 0 {
-		n.left = n.left.remove(key, less)
-	} else if g.Compare(key, n.key, less) > 0 {
-		n.right = n.right.remove(key, less)
-	} else {
-		if n.left != nil && n.right != nil {
-			rightMinNode := n.right.findSmallest()
-			n.key = rightMinNode.key
-			n.value = rightMinNode.value
-			n.right = n.right.remove(rightMinNode.key, less)
-		} else if n.left != nil {
-			n = n.left
-		} else if n.right != nil {
-			n = n.right
-		} else {
-			n = nil
-			return n
-		}
-
-	}
-	return n.rebalanceTree()
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func (n *node[K, V]) search(key K, less g.LessFn[K]) *node[K, V] {
-	if n == nil {
-		return nil
-	}
-	if g.Compare(key, n.key, less) < 0 {
-		return n.left.search(key, less)
-	} else if g.Compare(key, n.key, less) > 0 {
-		return n.right.search(key, less)
-	} else {
-		return n
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (n *node[K, V]) each(fn func(key K, val V)) {
-	if n == nil {
-		return
-	}
-	n.left.each(fn)
-	fn(n.key, n.value)
-	n.right.each(fn)
-}
+func (n *node[K, V]) each(fn func(key K, val V)) { _ = "STUB: not implemented"; return }
 
-func (n *node[K, V]) getHeight() int {
-	if n == nil {
-		return 0
-	}
-	return n.height
-}
+func (n *node[K, V]) getHeight() int { _ = "STUB: not implemented"; return 0 }
 
-func (n *node[K, V]) recalculateHeight() {
-	n.height = 1 + g.Max(n.left.getHeight(), n.right.getHeight())
-}
+func (n *node[K, V]) recalculateHeight() { _ = "STUB: not implemented"; return }
 
-func (n *node[K, V]) rebalanceTree() *node[K, V] {
-	if n == nil {
-		return n
-	}
-	n.recalculateHeight()
+func (n *node[K, V]) rebalanceTree() *node[K, V] { _ = "STUB: not implemented"; return nil }
 
-	balanceFactor := n.left.getHeight() - n.right.getHeight()
-	if balanceFactor <= -2 {
-		if n.right.left.getHeight() > n.right.right.getHeight() {
-			n.right = n.right.rotateRight()
-		}
-		return n.rotateLeft()
-	} else if balanceFactor >= 2 {
-		if n.left.right.getHeight() > n.left.left.getHeight() {
-			n.left = n.left.rotateLeft()
-		}
-		return n.rotateRight()
-	}
-	return n
-}
+func (n *node[K, V]) rotateLeft() *node[K, V] { _ = "STUB: not implemented"; return nil }
 
-func (n *node[K, V]) rotateLeft() *node[K, V] {
-	newRoot := n.right
-	n.right = newRoot.left
-	newRoot.left = n
+func (n *node[K, V]) rotateRight() *node[K, V] { _ = "STUB: not implemented"; return nil }
 
-	n.recalculateHeight()
-	newRoot.recalculateHeight()
-	return newRoot
-}
+func (n *node[K, V]) findSmallest() *node[K, V] { _ = "STUB: not implemented"; return nil }
 
-func (n *node[K, V]) rotateRight() *node[K, V] {
-	newRoot := n.left
-	n.left = newRoot.right
-	newRoot.right = n
-
-	n.recalculateHeight()
-	newRoot.recalculateHeight()
-	return newRoot
-}
-
-func (n *node[K, V]) findSmallest() *node[K, V] {
-	if n.left != nil {
-		return n.left.findSmallest()
-	} else {
-		return n
-	}
-}
-
-func (n *node[K, V]) size() int {
-	if n == nil {
-		return 0
-	}
-	return 1 + n.left.size() + n.right.size()
-}
+func (n *node[K, V]) size() int { _ = "STUB: not implemented"; return 0 }

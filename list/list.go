@@ -16,119 +16,46 @@ type Node[V any] struct {
 
 // New returns an empty linked list.
 func New[V any]() *List[V] {
-	return &List[V]{}
+	_ = "STUB: not implemented"
+
+	// PushBack adds 'v' to the end of the list.
+	return nil
 }
 
-// PushBack adds 'v' to the end of the list.
-func (l *List[V]) PushBack(v V) {
-	l.PushBackNode(&Node[V]{
-		Value: v,
-	})
-}
+func (l *List[V]) PushBack(v V) { _ = "STUB: not implemented"; return }
 
 // PushFront adds 'v' to the beginning of the list.
-func (l *List[V]) PushFront(v V) {
-	l.PushFrontNode(&Node[V]{
-		Value: v,
-	})
-}
+func (l *List[V]) PushFront(v V) { _ = "STUB: not implemented"; return }
 
 // PushBackNode adds the node 'n' to the back of the list.
-func (l *List[V]) PushBackNode(n *Node[V]) {
-	n.Next = nil
-	n.Prev = l.Back
-	if l.Back != nil {
-		l.Back.Next = n
-	} else {
-		l.Front = n
-	}
-	l.Back = n
-}
+func (l *List[V]) PushBackNode(n *Node[V]) { _ = "STUB: not implemented"; return }
 
 // PushFrontNode adds the node 'n' to the front of the list.
-func (l *List[V]) PushFrontNode(n *Node[V]) {
-	n.Next = l.Front
-	n.Prev = nil
-	if l.Front != nil {
-		l.Front.Prev = n
-	} else {
-		l.Back = n
-	}
-	l.Front = n
-}
+func (l *List[V]) PushFrontNode(n *Node[V]) { _ = "STUB: not implemented"; return }
 
 // InsertAfter adds 'next' into the list after 'n'. Returns the added node.
 func (l *List[V]) InsertAfter(n *Node[V], next *Node[V]) *Node[V] {
-	next.Next = n.Next
-	next.Prev = n
-	if n.Next != nil {
-		n.Next.Prev = next
-	} else {
-		l.Back = next
-	}
-	n.Next = next
-	return next
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // InsertBefore adds 'prev' into the list before 'n'. Returns the added node.
 func (l *List[V]) InsertBefore(n *Node[V], prev *Node[V]) *Node[V] {
-	prev.Next = n
-	prev.Prev = n.Prev
-	if n.Prev != nil {
-		n.Prev.Next = prev
-	} else {
-		l.Front = prev
-	}
-	n.Prev = prev
-	return prev
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Remove removes the node 'n' from the list.
-func (l *List[V]) Remove(n *Node[V]) {
-	if n.Next != nil {
-		n.Next.Prev = n.Prev
-	} else {
-		l.Back = n.Prev
-	}
-	if n.Prev != nil {
-		n.Prev.Next = n.Next
-	} else {
-		l.Front = n.Next
-	}
-}
+func (l *List[V]) Remove(n *Node[V]) { _ = "STUB: not implemented"; return }
 
 // Each calls 'fn' on every element from this node onward in the list.
-func (n *Node[V]) Each(fn func(val V)) {
-	node := n
-	for node != nil {
-		fn(node.Value)
-		node = node.Next
-	}
-}
+func (n *Node[V]) Each(fn func(val V)) { _ = "STUB: not implemented"; return }
 
 // EachReverse calls 'fn' on every element from this node backward in the list.
-func (n *Node[V]) EachReverse(fn func(val V)) {
-	node := n
-	for node != nil {
-		fn(node.Value)
-		node = node.Prev
-	}
-}
+func (n *Node[V]) EachReverse(fn func(val V)) { _ = "STUB: not implemented"; return }
 
 // EachNode calls 'fn' on every node from this node onward in the list.
-func (n *Node[V]) EachNode(fn func(n *Node[V])) {
-	node := n
-	for node != nil {
-		fn(node)
-		node = node.Next
-	}
-}
+func (n *Node[V]) EachNode(fn func(n *Node[V])) { _ = "STUB: not implemented"; return }
 
 // EachReverseNode calls 'fn' on every node from this node backward in the list.
-func (n *Node[V]) EachReverseNode(fn func(n *Node[V])) {
-	node := n
-	for node != nil {
-		fn(node)
-		node = node.Prev
-	}
-}
+func (n *Node[V]) EachReverseNode(fn func(n *Node[V])) { _ = "STUB: not implemented"; return }

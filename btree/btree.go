@@ -36,154 +36,50 @@ type entry[K, V any] struct {
 }
 
 // New returns an empty B-tree.
-func New[K, V any](less g.LessFn[K]) *Tree[K, V] {
-	return &Tree[K, V]{
-		root: &node[K, V]{},
-		less: less,
-	}
-}
+func New[K, V any](less g.LessFn[K]) *Tree[K, V] { _ = "STUB: not implemented"; return nil }
 
 // Size returns the number of elements in the tree.
 func (t *Tree[K, V]) Size() int {
-	return t.n
+	_ = "STUB: not implemented"
+
+	// Get returns the value associated with 'key'.
+	return 0
 }
 
-// Get returns the value associated with 'key'.
-func (t *Tree[K, V]) Get(key K) (V, bool) {
-	return t.search(t.root, key, t.height)
-}
+func (t *Tree[K, V]) Get(key K) (V, bool) { _ = "STUB: not implemented"; return *new(V), false }
 
 func (t *Tree[K, V]) search(x *node[K, V], key K, height int) (V, bool) {
-	children := x.children
-
-	if height == 0 {
-		// leaf node
-		for j := 0; j < x.m; j++ {
-			if g.Compare(key, children[j].key, t.less) == 0 {
-				return children[j].val, children[j].valid
-			}
-		}
-	} else {
-		// internal node
-		for j := 0; j < x.m; j++ {
-			if x.m == j+1 || g.Compare(key, children[j+1].key, t.less) < 0 {
-				return t.search(children[j].next, key, height-1)
-			}
-		}
-	}
-	var v V
-	return v, false
+	_ = "STUB: not implemented"
+	return *new(V), false
 }
+
+// leaf node
+
+// internal node
 
 // Put associates 'key' with 'val'.
-func (t *Tree[K, V]) Put(key K, val V) {
-	u := t.insert(t.root, key, val, t.height, true)
-	t.n++
-	if u == nil {
-		return
-	}
-
-	n := &node[K, V]{
-		m: 2,
-	}
-	n.children[0] = entry[K, V]{
-		key:  t.root.children[0].key,
-		next: t.root,
-	}
-	n.children[1] = entry[K, V]{
-		key:  u.children[0].key,
-		next: u,
-	}
-	t.root = n
-	t.height++
-}
+func (t *Tree[K, V]) Put(key K, val V) { _ = "STUB: not implemented"; return }
 
 // Remove removes the value associated with 'key'.
-func (t *Tree[K, V]) Remove(key K) {
-	_, ok := t.Get(key)
-	if !ok {
-		return
-	}
-	var v V
-	// insert a tombstone to remove an existing value
-	t.insert(t.root, key, v, t.height, false)
-	t.n--
-}
+func (t *Tree[K, V]) Remove(key K) { _ = "STUB: not implemented"; return }
+
+// insert a tombstone to remove an existing value
 
 func (t *Tree[K, V]) insert(h *node[K, V], key K, val V, height int, valid bool) *node[K, V] {
-	ent := entry[K, V]{
-		key:   key,
-		val:   val,
-		valid: valid,
-	}
-
-	var j int
-	if height == 0 {
-		// leaf node
-		for j = 0; j < h.m; j++ {
-			if g.Compare(key, h.children[j].key, t.less) == 0 {
-				h.children[j].val = val
-				h.children[j].valid = valid
-				return nil
-			} else if g.Compare(key, h.children[j].key, t.less) < 0 {
-				break
-			}
-		}
-	} else {
-		// internal node
-		for j = 0; j < h.m; j++ {
-			if (j+1 == h.m) || g.Compare(key, h.children[j+1].key, t.less) < 0 {
-				u := t.insert(h.children[j].next, key, val, height-1, valid)
-				if u == nil {
-					return nil
-				}
-				j++
-				ent.key = u.children[0].key
-				ent.valid = false
-				ent.next = u
-				break
-			}
-		}
-	}
-
-	for i := h.m; i > j; i-- {
-		h.children[i] = h.children[i-1]
-	}
-	h.children[j] = ent
-	h.m++
-	if h.m < maxChildren {
-		return nil
-	}
-	return t.split(h)
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (t *Tree[K, V]) split(h *node[K, V]) *node[K, V] {
-	n := &node[K, V]{
-		m: maxChildren / 2,
-	}
-	h.m = maxChildren / 2
-	for j := 0; j < maxChildren/2; j++ {
-		n.children[j] = h.children[maxChildren/2+j]
-	}
-	return n
-}
+// leaf node
+
+// internal node
+
+func (t *Tree[K, V]) split(h *node[K, V]) *node[K, V] { _ = "STUB: not implemented"; return nil }
 
 // Each calls 'fn' on every node in the tree in order.
-func (t *Tree[K, V]) Each(fn func(key K, val V)) {
-	t.each(t.root, t.height, fn)
-}
+func (t *Tree[K, V]) Each(fn func(key K, val V)) { _ = "STUB: not implemented"; return }
 
 func (t *Tree[K, V]) each(n *node[K, V], height int, fn func(key K, val V)) {
-	if height == 0 {
-		for j := 0; j < n.m; j++ {
-			if !n.children[j].valid {
-				continue
-			}
-			fn(n.children[j].key, n.children[j].val)
-		}
-	} else {
-		for j := 0; j < n.m; j++ {
-			t.each(n.children[j].next, height-1, fn)
-		}
-	}
+	_ = "STUB: not implemented"
+	return
 }
